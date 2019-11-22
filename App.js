@@ -232,8 +232,8 @@ class Zero extends React.Component {
         <h3>Black Friday application - what it does?</h3>
         <ul>
           <li>
-            Stimulate your happines by simulacring extasy of getting new better
-            and best goods. Buying makes people happy.
+            Stimulate your happiness by simulacring ecstasy of getting new
+            better and best goods. Buying makes people happy.
           </li>
           <li>
             One can add (and remove if wants) more new goods. Every good is
