@@ -1,13 +1,14 @@
 let goodsArray = [
-  { key: 0, name: "towar PIERWSZY", price: 1, numberAvailable: 11 },
-  { key: 1, name: "good SECOND", price: 11, numberAvailable: 13 },
-  { key: 2, name: "DRITTEN Ware", price: 8.5, numberAvailable: 100 },
+  { key: 0, name: "towar PIERWSZY", price: 3.99, numberAvailable: 111 },
+  { key: 1, name: "good SECOND", price: 6.66, numberAvailable: 131 },
+  { key: 2, name: "DRITTEN Ware", price: 8.2, numberAvailable: 100 },
   { key: 3, name: "QUATRIÈME marchandise", price: 9.99, numberAvailable: 9 }
 ];
 
 let numberArray = new Array(goodsArray.length).fill(0);
 let costArray = new Array(goodsArray.length).fill(0);
 let receiptArray = [];
+let limitActualValue = 0;
 
 const Order = props => {
   return (
@@ -62,13 +63,9 @@ const Wallet = props => {
           : `Limit already exceeded by: ${Math.abs(props.limit)}`}
       </p>
       <p>
-        {props.limit - props.sumTotal > 0
-          ? `Currently in the wallet: ${Math.round(
-              (props.limit - props.sumTotal) * 100
-            ) / 100}`
-          : `Currently over budget: ${Math.round(
-              (Math.abs(props.limit - props.sumTotal) * 100) / 100
-            )}`}
+        {props.limitActual > 0
+          ? `Currently in the wallet: ${props.limitActual}`
+          : `Currently over budget: ${Math.abs(props.limitActual)}`}
       </p>
     </div>
   );
@@ -88,7 +85,7 @@ const CartWidget = props => {
         <h4>Widget nr {props.props}</h4>
         <p>
           Pcs in the cart: {props.numberInCart[key]},<br />
-          for total: {props.numberInCart[key] * props.price.price}
+          for total: {props.bill[key]}
         </p>
         <button onClick={() => props.handleGoodLess(key)}> - </button>
         <button onClick={() => props.handleGoodMore(key)}> + </button>
@@ -108,6 +105,7 @@ const Good = props => {
         props={key}
         price={{ price }}
         numberInCart={props.numberInCart}
+        bill={props.bill}
         handleGoodMore={props.handleGoodMore}
         handleGoodLess={props.handleGoodLess}
       />
@@ -118,6 +116,7 @@ const Good = props => {
 class Zero extends React.Component {
   state = {
     limit: 100,
+    limitActual: limitActualValue,
     numberInCart: numberArray,
     bill: costArray,
     sumTotal: 0,
@@ -144,23 +143,64 @@ class Zero extends React.Component {
     }
   };
 
+  // MATHMACHINE STARTS
+
+  mathMachineOne = (x, y, z) => {
+    let sumInArticle = 0;
+    let xBefore = Math.floor(x);
+    let xAfter =
+      x.toString().indexOf(".") > 0
+        ? x.toString().substr(x.toString().indexOf(".") + 1, 2)
+        : (xAfter = "0");
+    let yBefore = Math.floor(y);
+    let yAfter =
+      y.toString().indexOf(".") > 0
+        ? y.toString().substr(y.toString().indexOf(".") + 1, 2)
+        : (yAfter = 0);
+
+    if (z === "plus") {
+      if (xAfter === 0 || xAfter.length < 2) {
+        xAfter = xAfter.concat("0");
+      }
+      let sumBefore = xBefore + yBefore;
+
+      let sumAfter = (parseInt(xAfter) + parseInt(yAfter)) / 100;
+      return (sumInArticle = sumBefore + sumAfter);
+    } else {
+      if (xAfter.length < 2) {
+        xAfter.length === 0 ? (xAfter = "00") : (xAfter = xAfter.concat("0"));
+      }
+
+      let sumBefore = xBefore - yBefore;
+      let sumAfter = (parseInt(xAfter) - parseInt(yAfter)) / 100;
+      return (sumInArticle = sumBefore + sumAfter);
+    }
+  };
+
+  // MATHMACHINE ENDS
+
   handleNumberPlus = key => {
     goodsArray.map(t => {
       if (key === t.key) {
-        costArray[key] = costArray[key] + goodsArray[key].price;
-        costArray[key] = Math.round(costArray[key] * 100) / 100;
+        // ERROR was here
+        costArray[key] = this.mathMachineOne(
+          costArray[key],
+          goodsArray[key].price,
+          "plus"
+        );
       }
     });
     this.makeSum();
   };
 
-  // https://stackoverflow.com/questions/11832914/round-to-at-most-2-decimal-places-only-if-necessary
-
   handleNumberMinus = key => {
     goodsArray.map(t => {
       if (key === t.key) {
-        costArray[key] -= goodsArray[key].price;
-        costArray[key] = Math.round(costArray[key] * 100) / 100;
+        costArray[key] = this.mathMachineOne(
+          costArray[key],
+          goodsArray[key].price,
+          "minus"
+        );
       }
     });
     this.makeSum();
@@ -176,11 +216,17 @@ class Zero extends React.Component {
     const sumTotal = this.state.bill.reduce((total, num) => {
       return total + num;
     });
-    this.sumTotal = Math.round((sumTotal + 0.00001) * 100) / 100;
+    const sumTotalValue = this.mathMachineOne(
+      this.state.limit,
+      this.state.sumTotal,
+      "minus"
+    );
     this.setState({
-      sumTotal: sumTotal.toFixed(2)
+      sumTotal: sumTotal.toFixed(2),
+      // sumTotal: sumTotal
+      limitActual: sumTotalValue.toFixed(2)
     });
-    // return sumTotal; (num + 0.00001)
+    console.log(this.state.limitActual);
   };
 
   makeReceipt = () => {
@@ -209,8 +255,7 @@ class Zero extends React.Component {
       // wyzerowac widżety
       costArray = new Array(goodsArray.length).fill(0);
       numberArray = new Array(goodsArray.length).fill(0);
-      let newLimit =
-        Math.round((this.state.limit - this.state.sumTotal) * 100) / 100;
+      let newLimit = this.state.limit - this.state.sumTotal;
       this.setState({
         order: true,
         numberInCart: numberArray,
@@ -268,6 +313,7 @@ class Zero extends React.Component {
               key={t.key}
               data={t}
               numberInCart={this.state.numberInCart}
+              bill={this.state.bill}
               handleGoodMore={this.handleGoodMore}
               handleGoodLess={this.handleGoodLess}
             />
@@ -281,7 +327,11 @@ class Zero extends React.Component {
             sumTotal={this.state.sumTotal}
           />
           <hr />
-          <Wallet limit={this.state.limit} sumTotal={this.state.sumTotal} />
+          <Wallet
+            limit={this.state.limit}
+            sumTotal={this.state.sumTotal}
+            limitActual={this.state.limitActual}
+          />
           {this.state.order && <Order sumTotal={this.state.receiptSum} />}
         </div>
       </div>
