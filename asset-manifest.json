@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/Kupuj-towary/static/css/main.930d5eb1.chunk.css",
-    "main.js": "/Kupuj-towary/static/js/main.33b2beba.chunk.js",
-    "main.js.map": "/Kupuj-towary/static/js/main.33b2beba.chunk.js.map",
+    "main.css": "/Kupuj-towary/static/css/main.ce729bb1.chunk.css",
+    "main.js": "/Kupuj-towary/static/js/main.9a23132c.chunk.js",
+    "main.js.map": "/Kupuj-towary/static/js/main.9a23132c.chunk.js.map",
     "runtime-main.js": "/Kupuj-towary/static/js/runtime-main.d365b3cf.js",
     "runtime-main.js.map": "/Kupuj-towary/static/js/runtime-main.d365b3cf.js.map",
     "static/js/2.022dd089.chunk.js": "/Kupuj-towary/static/js/2.022dd089.chunk.js",
     "static/js/2.022dd089.chunk.js.map": "/Kupuj-towary/static/js/2.022dd089.chunk.js.map",
     "index.html": "/Kupuj-towary/index.html",
-    "precache-manifest.0792d2034a16ae5dc00050af69aa1f2a.js": "/Kupuj-towary/precache-manifest.0792d2034a16ae5dc00050af69aa1f2a.js",
+    "precache-manifest.324238014c12428934ac456fffb98952.js": "/Kupuj-towary/precache-manifest.324238014c12428934ac456fffb98952.js",
     "service-worker.js": "/Kupuj-towary/service-worker.js",
-    "static/css/main.930d5eb1.chunk.css.map": "/Kupuj-towary/static/css/main.930d5eb1.chunk.css.map"
+    "static/css/main.ce729bb1.chunk.css.map": "/Kupuj-towary/static/css/main.ce729bb1.chunk.css.map"
   },
   "entrypoints": [
     "static/js/runtime-main.d365b3cf.js",
     "static/js/2.022dd089.chunk.js",
-    "static/css/main.930d5eb1.chunk.css",
-    "static/js/main.33b2beba.chunk.js"
+    "static/css/main.ce729bb1.chunk.css",
+    "static/js/main.9a23132c.chunk.js"
   ]
 }
