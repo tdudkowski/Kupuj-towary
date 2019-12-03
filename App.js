@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Helmet } from "react-helmet";
 import "./App.css";
+import langjson from "./lang.json";
 
 let goodsArray = [
   { key: 0, name: "towar PIERWSZY", price: 0.01, numberAvailable: 111 },
@@ -27,13 +28,31 @@ for (let i = 0; i < goodsArray.length; i++) {
 }
 // let cost2ShowArray = [];
 let cost2ShowArray = new Array(goodsArray.length).fill(0);
+// let string01 = '<span id="txt12">Limit in wallet</span>';
+// let string02 = '<span id="txt13">Limit already exceeded by</span>';
+// let string02 = '&lt;span id="txt13"&gt;Limit already exceeded by&lt;/span&gt;';
+let txt = new Array(20).fill("");
+
+const handleLanguage = () => {
+  txt = [];
+  for (let i = 0; i < 21; i++) {
+    let thisnumber;
+    if (i < 9) {
+      thisnumber = "0" + (i + 1);
+    } else {
+      thisnumber = i + 1;
+    }
+    txt.push(langjson.en[thisnumber]);
+  }
+};
+
+handleLanguage();
 
 const Exchange = props => {
-  console.log(props);
   return (
-    <>
-      <h3>Exchange</h3>
-      <p>Choose corrency</p>
+    <div>
+      <h3>{txt[17]}</h3>
+      <p>{txt[18]}</p>
       <form action="">
         <label htmlFor="">
           PLN{" "}
@@ -41,7 +60,6 @@ const Exchange = props => {
             type="radio"
             name="currency"
             checked={props.checked && "checked"}
-            //
             onChange={() => props.handleExchange("pln")}
           />{" "}
           <br />
@@ -51,7 +69,6 @@ const Exchange = props => {
           <input
             type="radio"
             name="currency"
-            // checked={props.checked}
             onChange={() => props.handleExchange("euro")}
           />{" "}
           <br />
@@ -61,19 +78,18 @@ const Exchange = props => {
           <input
             type="radio"
             name="currency"
-            // checked={props.checked}
             onChange={() => props.handleExchange("dolar")}
           />
         </label>
       </form>
-    </>
+    </div>
   );
 };
 
 const Cashier = props => {
   return (
     <>
-      <h3>Cashier</h3>
+      <h3>{txt[8]}</h3>
       <ul>
         {goodsArray.map(t =>
           props.numberInCart[t.key] > 0 ? (
@@ -83,7 +99,9 @@ const Cashier = props => {
           ) : null
         )}
       </ul>
-      <p>Sum total: {props.sumTotal}</p>
+      <p>
+        {txt[9]}: {props.sumTotal}
+      </p>
       <button
         onClick={() => props.handleBuy()}
         className={!props.sumTotal ? "disabled" : undefined}
@@ -97,26 +115,25 @@ const Cashier = props => {
 const Wallet = props => {
   return (
     <>
-      <h3>Wallet</h3>
+      <h3>{txt[10]}</h3>
       <p>
-        {props.limit > 0
-          ? `Limit in wallet: ${props.limit}`
-          : `Limit already exceeded by: ${Math.abs(props.limit)}`}
+        {props.limit < 0
+          ? `${txt[12]}: ${Math.abs(props.limit)}`
+          : `${txt[11]}: ${props.limit}`}
       </p>
       <p>
         {props.limitActual > 0
-          ? `Currently in the wallet: ${props.limitActual}`
-          : `Currently over budget: ${Math.abs(props.limitActual)}`}
+          ? `${txt[13]}: ${props.limitActual}`
+          : `${txt[14]}: ${Math.abs(props.limitActual)}`}
       </p>
     </>
   );
 };
 
 const Order = props => {
-  console.log("Order " + props.orderValue, props.orderValueIC);
   return (
     <>
-      <h3>Your order:</h3>
+      <h3>{txt[15]}:</h3>
       <ul>
         {receiptArray.map(t => (
           <li key={t.key}>
@@ -126,12 +143,12 @@ const Order = props => {
         ))}
       </ul>
       <p>
-        Sum total: {props.orderValue}{" "}
+        {txt[9]}: {props.orderValue}{" "}
         {props.orderValue == props.orderValueIC
           ? null
           : "(" + props.orderValueIC + ")"}
       </p>
-      <strong>Thank you!</strong>
+      <strong>{txt[16]}</strong>
     </>
   );
 };
@@ -182,23 +199,81 @@ const Header = () => {
   );
 };
 
+const Language = props => {
+  return (
+    <div>
+      <h3>{txt[19]}</h3>
+      <p>{txt[20]}</p>
+      <form action="">
+        <label htmlFor="">
+          Polski
+          <input
+            type="radio"
+            name="language"
+            onChange={() => props.handleLanguage("pl")}
+          />
+        </label>
+        <label htmlFor="">
+          English
+          <input
+            type="radio"
+            name="language"
+            onChange={() => props.handleLanguage("en")}
+          />
+        </label>
+        <label htmlFor="">
+          Deutsch
+          <input
+            type="radio"
+            name="language"
+            onChange={() => props.handleLanguage("de")}
+          />
+        </label>
+        <label htmlFor="">
+          Francais
+          <input
+            type="radio"
+            name="language"
+            onChange={() => props.handleLanguage("fr")}
+          />
+        </label>
+      </form>
+    </div>
+  );
+};
+
+const Pad = props => {
+  return (
+    <div className="pad">
+      <Exchange checked={props.checked} handleExchange={props.handleExchange} />
+      <Language handleLanguage={props.handleLanguage} />
+    </div>
+  );
+};
+
 const CartWidget = props => {
   const { numberAvailable } = props.numberAvailable;
   const key = props.props;
   return (
     <div className="cartwidget">
       <div>
-        <h4>Availability</h4>
-        <p>Yet to buy: {numberAvailable - props.numberInCart[key]} pcs</p>
-        <p>In stock: {numberAvailable} pcs</p>
+        <h4>{txt[2]}</h4>
+        <p>
+          {txt[3]}: {numberAvailable - props.numberInCart[key]} pcs
+        </p>
+        <p>
+          {txt[4]}: {numberAvailable} pcs
+        </p>
       </div>
       <div>
         <div>
-          <h4>Widget nr {key}</h4>
+          <h4>
+            {txt[5]} {key}
+          </h4>
           <p>
-            Pcs in the cart: {props.numberInCart[key]},
+            {txt[6]}: {props.numberInCart[key]},
             <br />
-            for total: {props.cost[key]}
+            {txt[7]}: {props.cost[key]}
           </p>
         </div>
         <div>
@@ -232,8 +307,14 @@ const Good = props => {
     <div className="good">
       <h3>{name}</h3>
       <div className="price">
-        <p>Price: {price}</p>
-        <p>Price for currency of choice: {props.price[key]}</p>
+        <p>
+          {/* <span id="txt01">Price</span>: {price} */}
+          {txt[0]}: {price}
+        </p>
+        <p>
+          {/* <span id="txt02">Price for currency of choice</span>:{" "} */}
+          {txt[1]}: {props.price[key]}
+        </p>
       </div>
       {/* <div className="price">Price: {costArrayExchange[key]}</div> */}
       <CartWidget
@@ -258,18 +339,13 @@ const Main = props => {
             price={props.price}
             numberInCart={props.numberInCart}
             cost={props.cost}
+            txt={props.txt}
             handleGood={props.handleGood}
+            handleLanguage={props.handleLanguage}
           />
         ))}
       </div>
       <div className="cart">
-        <div>
-          <Exchange
-            checked={props.checked}
-            handleExchange={props.handleExchange}
-          />
-        </div>
-        <hr />
         <div>
           <Cashier
             numberInCart={props.numberInCart}
@@ -284,6 +360,7 @@ const Main = props => {
             limit={props.limit}
             sumTotal={props.sumTotal}
             limitActual={props.limitActual}
+            txt={props.txt}
           />
         </div>
         {props.order && (
@@ -319,7 +396,24 @@ class App extends Component {
     orderValue: 0,
     orderValueIC: 0,
     checked: true,
-    currency: "pln"
+    currency: "pln",
+    txt: txt
+  };
+
+  handleLanguage = lang => {
+    txt = [];
+    for (let i = 0; i < 21; i++) {
+      let thisnumber;
+      if (i < 9) {
+        thisnumber = "0" + (i + 1);
+      } else {
+        thisnumber = i + 1;
+      }
+      txt.push(langjson[lang][thisnumber]);
+      this.setState({
+        txt: txt
+      });
+    }
   };
 
   handleExchange = currency => {
@@ -333,13 +427,14 @@ class App extends Component {
       let currencyPrice = parseFloat((goodsArray[i].price * ratio).toFixed(4));
       prices2ShowArray.push(currencyPrice);
     }
-    this.setState({
+    this.setState(prevState => ({
+      limit2Show: parseFloat((prevState.limit * ratio).toFixed(4)),
+      limitActual2Show: parseFloat((prevState.limitActual * ratio).toFixed(4)),
       prices2Show: prices2ShowArray,
       cost2Show: cost2ShowArray,
       checked: false
-    });
+    }));
     if (currency === "pln") this.setState({ checked: true });
-    console.log("w funkcji handleExchange " + ratio);
     return ratio;
   };
 
@@ -369,7 +464,6 @@ class App extends Component {
         }
         sumAfter = (parseInt(xAfter) + parseInt(yAfter)) / 100;
         sumInArticle = sumBefore + sumAfter;
-        console.log("w mathMachinie PLUS " + xAfter, yAfter, sumAfter);
         return sumInArticle;
       case "minus":
         sumBefore = xBefore - yBefore;
@@ -377,29 +471,14 @@ class App extends Component {
           xAfter *= 10;
         }
         sumAfter = (parseInt(xAfter) - parseInt(yAfter)) / 100;
-        console.log("w mathmachinie MINUS " + xAfter, yAfter, sumAfter);
         sumInArticle = sumBefore + sumAfter;
         return sumInArticle;
       case "multiplication":
-        console.log(
-          "w mathmachinie MULTIPLICATION " + xBefore,
-          xAfter,
-          yBefore,
-          yAfter,
-          x,
-          y,
-          operator,
-          ratio
-        );
         sumBefore = xBefore * y;
         sumAfter = (xAfter * y) / 10;
-        console.log("INTER " + sumBefore, sumAfter);
-        // sumInArticle = this.mathMachine(sumBefore, sumAfter, "plus");
         sumInArticle = sumBefore + sumAfter;
-        // sumInArticle = (x * y).toFixed(3);
         return sumInArticle;
       default:
-        console.log("WTF " + x, y, operator);
     }
   };
 
@@ -413,16 +492,18 @@ class App extends Component {
 
   makeArray2Show = () => {
     this.updateCost2ShowArray();
-
     this.setState(prevState => ({
       sumTotal2Show: parseFloat((prevState.sumTotal * ratio).toFixed(4)),
       limit2Show: parseFloat((prevState.limit * ratio).toFixed(4)),
-      limitActual2Show: parseFloat((prevState.limitActual * ratio).toFixed(4)),
+      // limitActual2Show: parseFloat((prevState.limitActual * ratio).toFixed(4)),
+      limitActual2Show: this.mathMachine(
+        prevState.limit,
+        prevState.sumTotal,
+        "minus"
+      ).toFixed(2),
       prices2Show: prices2ShowArray,
       cost2Show: cost2ShowArray
     }));
-    console.log(this.state.sumTotal2Show);
-    // this.makeSumTotal();
   };
 
   makeSumTotal = () => {
@@ -476,7 +557,6 @@ class App extends Component {
   };
 
   makeReceipt = () => {
-    console.log("cost2ShowArray " + cost2ShowArray);
     receiptArray = [];
     for (let i = 0; i < goodsArray.length; i++) {
       if (this.state.numberInCart[i] > 0) {
@@ -510,15 +590,16 @@ class App extends Component {
         "minus"
       );
 
-      this.setState({
-        limit: newLimit,
-        newLimit: this.state.limit,
+      this.setState(prevState => ({
+        limit2Show: prevState.limitActual2Show,
+        limit: prevState.limitActual2Show,
+        newLimit: prevState.limit,
         order: true,
         numberInCart: numberArray,
         bill: costArray,
         sumTotal: 0,
         sumTotal2Show: 0
-      });
+      }));
       this.makeReceipt();
     } else {
       return;
@@ -559,6 +640,10 @@ class App extends Component {
         </Helmet>
         <div className="container">
           <Header />
+          <Pad
+            handleExchange={this.handleExchange}
+            handleLanguage={this.handleLanguage}
+          />
           <Main
             numberInCart={this.state.numberInCart}
             price={this.state.prices2Show}
@@ -574,9 +659,10 @@ class App extends Component {
             orderValue={this.state.orderValue}
             orderValueIC={this.state.orderValueIC}
             checked={this.state.checked}
-            handleExchange={this.handleExchange}
+            txt={this.state.txt}
             handleGood={this.handleGood}
             handleBuy={this.handleBuy}
+            handleLanguage={this.handleLanguage}
           />
         </div>
       </>
