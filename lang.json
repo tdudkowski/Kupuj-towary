@@ -20,7 +20,12 @@
     "18": "Wymiana",
     "19": "Wybierz walutę",
     "20": "Język",
-    "21": "Wybierz język"
+    "21": "Wybierz język",
+    "22": "Styl",
+    "23": "Dostosuj styl",
+    "24": "Jasny",
+    "25": "Ciemny",
+    "26": "Wysoki kontrast"
   },
   "en": {
     "01": "Price",
@@ -43,7 +48,12 @@
     "18": "Exchange",
     "19": "Choose currency",
     "20": "Language",
-    "21": "Choose language"
+    "21": "Choose language",
+    "22": "Style",
+    "23": "Set style",
+    "24": "Light",
+    "25": "Dark",
+    "26": "High contrast"
   },
   "de": {
     "01": "Preis",
@@ -52,7 +62,7 @@
     "04": "Noch zu kaufen",
     "05": "Auf Lager",
     "06": "Widget nr",
-    "07": "Anzahl der Artikel in Ihrem Warenkorb",
+    "07": "Anzahl von Artikeln im Warenkorb",
     "08": "für insgesamt",
     "09": "Kassierer",
     "10": "Gesamtsumme",
@@ -66,7 +76,12 @@
     "18": "Geldwechsel",
     "19": "Währung wählen",
     "20": "Sprache",
-    "21": "Sprache wählen"
+    "21": "Sprache wählen",
+    "22": "Stil",
+    "23": "Stil festlegen",
+    "24": "Licht",
+    "25": "Dunkel",
+    "26": "Hoher Kontrast"
   },
 
   "fr": {
@@ -90,6 +105,11 @@
     "18": "Échange d'argent",
     "19": "Choisissez la devise",
     "20": "Langue",
-    "21": "Choisissez la langue"
+    "21": "Choisissez la langue",
+    "22": "Style",
+    "23": "Définir le style",
+    "24": "Lumière",
+    "25": "Sombre",
+    "26": "Contraste élevé"
   }
 }

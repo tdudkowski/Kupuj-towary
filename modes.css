@@ -1,0 +1,48 @@
+div.total.light {
+  background-color: #ffe;
+  color: #334;
+}
+
+div.total.light .cart ul li {
+  background-color: #eee;
+}
+
+div.total.light .cart ul li:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+div.total.dark {
+  background-color: #334;
+  color: #99a;
+}
+
+div.total.dark button {
+  background-color: #778;
+  color: #ccd;
+}
+
+div.total.dark .cart ul li {
+  background-color: #556;
+}
+
+div.total.dark .cart ul li:nth-child(odd) {
+  background-color: #445;
+}
+
+div.total.contrast {
+  background-color: #223;
+  color: #dde;
+}
+
+div.total.contrast button {
+  background-color: #445;
+  color: #ffe;
+}
+
+div.total.contrast .cart ul li {
+  background-color: #334;
+}
+
+div.total.contrast .cart ul li:nth-child(odd) {
+  background-color: #445;
+}

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Helmet } from "react-helmet";
 import "./App.css";
 import langjson from "./lang.json";
+import "./modes.css";
 
 let goodsArray = [
   { key: 0, name: "towar PIERWSZY", price: 0.01, numberAvailable: 111 },
@@ -31,11 +32,16 @@ let cost2ShowArray = new Array(goodsArray.length).fill(0);
 // let string01 = '<span id="txt12">Limit in wallet</span>';
 // let string02 = '<span id="txt13">Limit already exceeded by</span>';
 // let string02 = '&lt;span id="txt13"&gt;Limit already exceeded by&lt;/span&gt;';
-let txt = new Array(20).fill("");
+let txt = new Array(26).fill("");
+let light = true;
+let dark = false;
+let contrast = false;
+
+let classNames = "";
 
 const handleLanguage = () => {
   txt = [];
-  for (let i = 0; i < 21; i++) {
+  for (let i = 0; i < 27; i++) {
     let thisnumber;
     if (i < 9) {
       thisnumber = "0" + (i + 1);
@@ -242,11 +248,47 @@ const Language = props => {
   );
 };
 
+const Style = props => {
+  return (
+    <div>
+      <h3>{txt[21]}</h3>
+      <p>{txt[22]}</p>
+      <form action="">
+        <label htmlFor="">
+          {txt[23]}
+          <input
+            name="style"
+            type="radio"
+            onChange={() => props.handleStyle("light")}
+          />
+        </label>
+        <label htmlFor="">
+          {txt[24]}
+          <input
+            name="style"
+            type="radio"
+            onChange={() => props.handleStyle("dark")}
+          />
+        </label>
+        <label htmlFor="">
+          {txt[25]}
+          <input
+            name="style"
+            type="radio"
+            onChange={() => props.handleStyle("contrast")}
+          />
+        </label>
+      </form>
+    </div>
+  );
+};
+
 const Pad = props => {
   return (
     <div className="pad">
       <Exchange checked={props.checked} handleExchange={props.handleExchange} />
       <Language handleLanguage={props.handleLanguage} />
+      <Style handleStyle={props.handleStyle} txt={props.txt} />
     </div>
   );
 };
@@ -397,12 +439,57 @@ class App extends Component {
     orderValueIC: 0,
     checked: true,
     currency: "pln",
-    txt: txt
+    txt: txt,
+    style: this.classNames
+  };
+
+  handleStyle = style => {
+    if (style === "dark") {
+      dark = true;
+      light = false;
+      contrast = false;
+    }
+
+    switch (style) {
+      case "light":
+        light = true;
+        dark = false;
+        contrast = false;
+
+        break;
+      case "dark":
+        light = false;
+        dark = true;
+        contrast = false;
+        break;
+      case "contrast":
+        light = false;
+        dark = false;
+        contrast = true;
+        break;
+      default:
+        light = true;
+        dark = false;
+        contrast = false;
+    }
+
+    let classNames = [
+      "total",
+      light && "light",
+      dark && "dark",
+      contrast && "contrast"
+    ]
+      .filter(e => e)
+      .join(" ");
+
+    this.setState({
+      style: classNames
+    });
   };
 
   handleLanguage = lang => {
     txt = [];
-    for (let i = 0; i < 21; i++) {
+    for (let i = 0; i < 27; i++) {
       let thisnumber;
       if (i < 9) {
         thisnumber = "0" + (i + 1);
@@ -547,13 +634,14 @@ class App extends Component {
       operator
     );
 
-    this.setState({
-      numberInCart: this.state.numberInCart,
-      bill: costArray
-    });
     this.makeSumTotal();
     this.makeArray2Show();
     this.makeNewLimit();
+    this.setState(prevState => ({
+      numberInCart: this.state.numberInCart,
+      bill: costArray,
+      limitActual2Show: parseFloat((prevState.limitActual * ratio).toFixed(4))
+    }));
   };
 
   makeReceipt = () => {
@@ -591,9 +679,13 @@ class App extends Component {
       );
 
       this.setState(prevState => ({
-        limit2Show: prevState.limitActual2Show,
-        limit: prevState.limitActual2Show,
-        newLimit: prevState.limit,
+        // limit2Show: prevState.limitActual2Show,
+        limit: prevState.limitActual,
+        limitActual: newLimit,
+        limit2Show: parseFloat((prevState.limitActual * ratio).toFixed(4)),
+        limitActual2Show: parseFloat(
+          (prevState.limitActual * ratio).toFixed(4)
+        ),
         order: true,
         numberInCart: numberArray,
         bill: costArray,
@@ -608,7 +700,7 @@ class App extends Component {
 
   render() {
     return (
-      <>
+      <div className={this.state.style}>
         <Helmet>
           <meta charset="UTF-8" />
           <meta
@@ -641,8 +733,10 @@ class App extends Component {
         <div className="container">
           <Header />
           <Pad
+            txt={this.state.txt}
             handleExchange={this.handleExchange}
             handleLanguage={this.handleLanguage}
+            handleStyle={this.handleStyle}
           />
           <Main
             numberInCart={this.state.numberInCart}
@@ -665,7 +759,7 @@ class App extends Component {
             handleLanguage={this.handleLanguage}
           />
         </div>
-      </>
+      </div>
     );
   }
 }
