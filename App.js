@@ -4,6 +4,9 @@ import "./App.css";
 import langjson from "./lang.json";
 import "./modes.css";
 
+import Info from "./Info";
+import Pad from "./Pad";
+
 let goodsArray = [
   { key: 0, name: "towar PIERWSZY", price: 0.01, numberAvailable: 111 },
   { key: 1, name: "good SECOND", price: 1, numberAvailable: 131 },
@@ -19,7 +22,6 @@ let exchangeRates = [
 
 let numberArray = new Array(goodsArray.length).fill(0);
 let costArray = new Array(goodsArray.length).fill(0);
-// let costArrayExchange = new Array(goodsArray.length).fill(1);
 let receiptArray = [];
 let limitActualValue = 0;
 let ratio = 1;
@@ -27,17 +29,14 @@ let prices2ShowArray = [];
 for (let i = 0; i < goodsArray.length; i++) {
   prices2ShowArray.push(goodsArray[i].price);
 }
-// let cost2ShowArray = [];
 let cost2ShowArray = new Array(goodsArray.length).fill(0);
-// let string01 = '<span id="txt12">Limit in wallet</span>';
-// let string02 = '<span id="txt13">Limit already exceeded by</span>';
-// let string02 = '&lt;span id="txt13"&gt;Limit already exceeded by&lt;/span&gt;';
+
 let txt = new Array(26).fill("");
+
+let classNames = "";
 let light = true;
 let dark = false;
 let contrast = false;
-
-let classNames = "";
 
 const handleLanguage = () => {
   txt = [];
@@ -53,44 +52,6 @@ const handleLanguage = () => {
 };
 
 handleLanguage();
-
-const Exchange = props => {
-  return (
-    <div>
-      <h3>{txt[17]}</h3>
-      <p>{txt[18]}</p>
-      <form action="">
-        <label htmlFor="">
-          PLN{" "}
-          <input
-            type="radio"
-            name="currency"
-            checked={props.checked && "checked"}
-            onChange={() => props.handleExchange("pln")}
-          />{" "}
-          <br />
-        </label>
-        <label htmlFor="">
-          Euro{" "}
-          <input
-            type="radio"
-            name="currency"
-            onChange={() => props.handleExchange("euro")}
-          />{" "}
-          <br />
-        </label>
-        <label htmlFor="">
-          US Dollar{" "}
-          <input
-            type="radio"
-            name="currency"
-            onChange={() => props.handleExchange("dolar")}
-          />
-        </label>
-      </form>
-    </div>
-  );
-};
 
 const Cashier = props => {
   return (
@@ -159,140 +120,6 @@ const Order = props => {
   );
 };
 
-// const Helmet = () => {
-//   return (
-//     <>
-//     </>
-//   );
-// };
-
-const Header = () => {
-  return (
-    <header>
-      <h3>Black Friday application - what it does?</h3>
-      <ul>
-        <li>
-          Stimulate your happiness by simulacring ecstasy of getting new better
-          and best goods. Buying makes people happy.
-        </li>
-        <li>
-          One can add (and remove if wants) more new goods. Every good is good.
-        </li>
-        <li>
-          Stock info is updated immediately after purchase. Additionally
-          information about current capacity of purchase is provided
-        </li>
-        <li>
-          Budget limit is displayed, current and total. You can track overruns,
-          no warnings just info.
-        </li>
-        <li>
-          Prices, prices everywhere. Of a good, for one piece, all you are
-          buyimg, total sum of purchase, actual and the previous one.
-        </li>
-        <li>
-          Complete list of good: being purchased now, and in the previous
-          purchase.
-        </li>
-        <li>
-          Application is in progress, new functions, and features are on the way
-          - this is my very first React application, so it's gonna grow till be
-          useful in learning this framework.
-        </li>
-      </ul>
-      <h1>Kupuj towary! Waren kaufen! Buy Goods! Acheter des biens !</h1>
-    </header>
-  );
-};
-
-const Language = props => {
-  return (
-    <div>
-      <h3>{txt[19]}</h3>
-      <p>{txt[20]}</p>
-      <form action="">
-        <label htmlFor="">
-          Polski
-          <input
-            type="radio"
-            name="language"
-            onChange={() => props.handleLanguage("pl")}
-          />
-        </label>
-        <label htmlFor="">
-          English
-          <input
-            type="radio"
-            name="language"
-            onChange={() => props.handleLanguage("en")}
-          />
-        </label>
-        <label htmlFor="">
-          Deutsch
-          <input
-            type="radio"
-            name="language"
-            onChange={() => props.handleLanguage("de")}
-          />
-        </label>
-        <label htmlFor="">
-          Francais
-          <input
-            type="radio"
-            name="language"
-            onChange={() => props.handleLanguage("fr")}
-          />
-        </label>
-      </form>
-    </div>
-  );
-};
-
-const Style = props => {
-  return (
-    <div>
-      <h3>{txt[21]}</h3>
-      <p>{txt[22]}</p>
-      <form action="">
-        <label htmlFor="">
-          {txt[23]}
-          <input
-            name="style"
-            type="radio"
-            onChange={() => props.handleStyle("light")}
-          />
-        </label>
-        <label htmlFor="">
-          {txt[24]}
-          <input
-            name="style"
-            type="radio"
-            onChange={() => props.handleStyle("dark")}
-          />
-        </label>
-        <label htmlFor="">
-          {txt[25]}
-          <input
-            name="style"
-            type="radio"
-            onChange={() => props.handleStyle("contrast")}
-          />
-        </label>
-      </form>
-    </div>
-  );
-};
-
-const Pad = props => {
-  return (
-    <div className="pad">
-      <Exchange checked={props.checked} handleExchange={props.handleExchange} />
-      <Language handleLanguage={props.handleLanguage} />
-      <Style handleStyle={props.handleStyle} txt={props.txt} />
-    </div>
-  );
-};
-
 const CartWidget = props => {
   const { numberAvailable } = props.numberAvailable;
   const key = props.props;
@@ -350,15 +177,12 @@ const Good = props => {
       <h3>{name}</h3>
       <div className="price">
         <p>
-          {/* <span id="txt01">Price</span>: {price} */}
           {txt[0]}: {price}
         </p>
         <p>
-          {/* <span id="txt02">Price for currency of choice</span>:{" "} */}
           {txt[1]}: {props.price[key]}
         </p>
       </div>
-      {/* <div className="price">Price: {costArrayExchange[key]}</div> */}
       <CartWidget
         props={key}
         numberAvailable={{ numberAvailable }}
@@ -582,7 +406,6 @@ class App extends Component {
     this.setState(prevState => ({
       sumTotal2Show: parseFloat((prevState.sumTotal * ratio).toFixed(4)),
       limit2Show: parseFloat((prevState.limit * ratio).toFixed(4)),
-      // limitActual2Show: parseFloat((prevState.limitActual * ratio).toFixed(4)),
       limitActual2Show: this.mathMachine(
         prevState.limit,
         prevState.sumTotal,
@@ -679,7 +502,6 @@ class App extends Component {
       );
 
       this.setState(prevState => ({
-        // limit2Show: prevState.limitActual2Show,
         limit: prevState.limitActual,
         limitActual: newLimit,
         limit2Show: parseFloat((prevState.limitActual * ratio).toFixed(4)),
@@ -731,9 +553,8 @@ class App extends Component {
           <title>Kupuj towary try your Black Friday experience</title>
         </Helmet>
         <div className="container">
-          <Header />
+          <Info />
           <Pad
-            txt={this.state.txt}
             handleExchange={this.handleExchange}
             handleLanguage={this.handleLanguage}
             handleStyle={this.handleStyle}
@@ -745,10 +566,6 @@ class App extends Component {
             sumTotal={this.state.sumTotal2Show}
             limit={this.state.limit2Show}
             limitActual={this.state.limitActual2Show}
-            // limit={parseFloat((this.state.limit * ratio).toFixed(2))}
-            // limitActual={parseFloat(
-            //   (this.state.limitActual * ratio).toFixed(2)
-            // )}
             order={this.state.order}
             orderValue={this.state.orderValue}
             orderValueIC={this.state.orderValueIC}
