@@ -1,19 +1,19 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "525b4eb8763884fdffe53954bdfae169",
+    "revision": "a249408e30cce1c78bae613cd2b1e3a8",
     "url": "/Kupuj-towary/index.html"
   },
   {
-    "revision": "f6349aa96942c4c04e67",
+    "revision": "2c2f7fd65186a600621b",
     "url": "/Kupuj-towary/static/css/main.ce729bb1.chunk.css"
   },
   {
-    "revision": "aeaca8c7aefafe5c3739",
-    "url": "/Kupuj-towary/static/js/2.022dd089.chunk.js"
+    "revision": "02344511a55f95115830",
+    "url": "/Kupuj-towary/static/js/2.9130d1aa.chunk.js"
   },
   {
-    "revision": "f6349aa96942c4c04e67",
-    "url": "/Kupuj-towary/static/js/main.9a23132c.chunk.js"
+    "revision": "2c2f7fd65186a600621b",
+    "url": "/Kupuj-towary/static/js/main.0e0011b2.chunk.js"
   },
   {
     "revision": "da2cc47dd60db5186928",
