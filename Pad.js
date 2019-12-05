@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import App from "./App.js";
+import React from "react";
+// import App from "./App.js";
 import langjson from "./lang.json";
 
 let txt = new Array(26).fill("");

@@ -1,0 +1,8 @@
+section {
+  display: flex;
+  padding: 0.5rem;
+}
+
+section div.info {
+  flex: 1;
+}

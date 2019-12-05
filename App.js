@@ -4,15 +4,14 @@ import "./App.css";
 import langjson from "./lang.json";
 import "./modes.css";
 
-import Info from "./Info";
+import { goodsArray, numberArray, costArray } from "./Admin.js";
 import Pad from "./Pad";
 
-let goodsArray = [
-  { key: 0, name: "towar PIERWSZY", price: 0.01, numberAvailable: 111 },
-  { key: 1, name: "good SECOND", price: 1, numberAvailable: 131 },
-  { key: 2, name: "DRITTEN Ware", price: 10, numberAvailable: 100 },
-  { key: 3, name: "QUATRIÈME marchandise", price: 9.99, numberAvailable: 90 }
-];
+let prices2ShowArray = [];
+for (let i = 0; i < goodsArray.length; i++) {
+  prices2ShowArray.push(goodsArray[i].price);
+}
+let cost2ShowArray = new Array(goodsArray.length).fill(0);
 
 let exchangeRates = [
   { key: 0, name: "pln", ratio: 1 },
@@ -20,20 +19,12 @@ let exchangeRates = [
   { key: 2, name: "dolar", ratio: 0.26 }
 ];
 
-let numberArray = new Array(goodsArray.length).fill(0);
-let costArray = new Array(goodsArray.length).fill(0);
 let receiptArray = [];
 let limitActualValue = 0;
 let ratio = 1;
-let prices2ShowArray = [];
-for (let i = 0; i < goodsArray.length; i++) {
-  prices2ShowArray.push(goodsArray[i].price);
-}
-let cost2ShowArray = new Array(goodsArray.length).fill(0);
 
 let txt = new Array(26).fill("");
 
-let classNames = "";
 let light = true;
 let dark = false;
 let contrast = false;
@@ -111,7 +102,7 @@ const Order = props => {
       </ul>
       <p>
         {txt[9]}: {props.orderValue}{" "}
-        {props.orderValue == props.orderValueIC
+        {props.orderValue === props.orderValueIC
           ? null
           : "(" + props.orderValueIC + ")"}
       </p>
@@ -279,7 +270,6 @@ class App extends Component {
         light = true;
         dark = false;
         contrast = false;
-
         break;
       case "dark":
         light = false;
@@ -422,7 +412,7 @@ class App extends Component {
       return total + num;
     });
     sumTotal = sumTotal.toFixed(2);
-    if (sumTotal == 0.0) {
+    if (sumTotal === 0.0 || sumTotal === 0) {
       sumTotal = parseInt(0);
     }
     this.setState({
@@ -445,17 +435,21 @@ class App extends Component {
       operator === "plus" &&
       this.state.numberInCart[key] < goodsArray[key].numberAvailable
     ) {
-      this.state.numberInCart[key] += 1;
+      // this.state.numberInCart[key] += 1;
+      numberArray[key] += 1;
     } else if (operator === "minus" && this.state.numberInCart[key] > 0) {
-      this.state.numberInCart[key] -= 1;
+      numberArray[key] -= 1;
     } else {
       return;
     }
+    console.log(costArray);
     costArray[key] = this.mathMachine(
       costArray[key],
       goodsArray[key].price,
       operator
     );
+
+    this.setState({ numberInCart: numberArray, bill: costArray });
 
     this.makeSumTotal();
     this.makeArray2Show();
@@ -490,10 +484,10 @@ class App extends Component {
   handleBuy = () => {
     if (this.state.sumTotal > 0) {
       goodsArray.map(t => {
-        goodsArray[t.key].numberAvailable -= numberArray[t.key];
+        return (goodsArray[t.key].numberAvailable -= numberArray[t.key]);
       });
-      costArray = new Array(goodsArray.length).fill(0);
-      numberArray = new Array(goodsArray.length).fill(0);
+      costArray.fill(0);
+      numberArray.fill(0);
 
       let newLimit = this.mathMachine(
         this.state.limit,
@@ -550,10 +544,11 @@ class App extends Component {
           <meta name="twitter:card" content="app" />
           <meta name="twitter:site" content="@tdudkowski" />
           <meta name="twitter:creator" content="@tdudkowski" />
-          <title>Kupuj towary try your Black Friday experience</title>
+          <title>Kupuj towary try your Black Friday experience w App.js</title>
         </Helmet>
         <div className="container">
-          <Info />
+          {/* <Info /> */}
+          <h1>Kupuj towary! Waren kaufen! Buy Goods! Acheter des biens !</h1>
           <Pad
             handleExchange={this.handleExchange}
             handleLanguage={this.handleLanguage}
@@ -581,4 +576,5 @@ class App extends Component {
   }
 }
 
+export { goodsArray, numberArray };
 export default App;

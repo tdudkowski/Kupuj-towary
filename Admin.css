@@ -1,0 +1,40 @@
+.login {
+  width: 100%;
+  border: 1px solid #aa9;
+  text-align: center;
+}
+
+.login form label {
+  font-size: 2rem;
+  display: block;
+  margin: 1rem auto;
+  text-align: center;
+}
+
+.login form label input {
+  margin: 1rem;
+  line-height: 2rem;
+}
+
+.login form label button {
+  font-size: 1.5rem;
+}
+
+.hidden {
+  display: none;
+}
+
+.logged {
+  flex-basis: 100%;
+}
+
+.listOfGoods {
+  list-style-type: none;
+}
+.listOfGoods li {
+  margin: 0.5rem;
+  padding: 0.5rem;
+}
+.listOfGoods li:nth-child(odd) {
+  background-color: #eee;
+}
