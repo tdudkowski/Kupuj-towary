@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/Kupuj-towary/static/css/main.7491a057.chunk.css",
-    "main.js": "/Kupuj-towary/static/js/main.9d2f48a0.chunk.js",
-    "main.js.map": "/Kupuj-towary/static/js/main.9d2f48a0.chunk.js.map",
+    "main.js": "/Kupuj-towary/static/js/main.6d684303.chunk.js",
+    "main.js.map": "/Kupuj-towary/static/js/main.6d684303.chunk.js.map",
     "runtime-main.js": "/Kupuj-towary/static/js/runtime-main.d365b3cf.js",
     "runtime-main.js.map": "/Kupuj-towary/static/js/runtime-main.d365b3cf.js.map",
     "static/js/2.7dbba933.chunk.js": "/Kupuj-towary/static/js/2.7dbba933.chunk.js",
     "static/js/2.7dbba933.chunk.js.map": "/Kupuj-towary/static/js/2.7dbba933.chunk.js.map",
     "index.html": "/Kupuj-towary/index.html",
-    "precache-manifest.e4cdbbfcb52b0ebe6699fcc06b04553a.js": "/Kupuj-towary/precache-manifest.e4cdbbfcb52b0ebe6699fcc06b04553a.js",
+    "precache-manifest.555ff3cdcd5d9273ca5b4497ff145e4f.js": "/Kupuj-towary/precache-manifest.555ff3cdcd5d9273ca5b4497ff145e4f.js",
     "service-worker.js": "/Kupuj-towary/service-worker.js",
     "static/css/main.7491a057.chunk.css.map": "/Kupuj-towary/static/css/main.7491a057.chunk.css.map"
   },
@@ -16,6 +16,6 @@
     "static/js/runtime-main.d365b3cf.js",
     "static/js/2.7dbba933.chunk.js",
     "static/css/main.7491a057.chunk.css",
-    "static/js/main.9d2f48a0.chunk.js"
+    "static/js/main.6d684303.chunk.js"
   ]
 }
