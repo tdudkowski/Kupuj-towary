@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "e242cca23538d701cf5e237627054c35",
+    "revision": "562733818f859622639ac79e785d59e3",
     "url": "/Kupuj-towary/index.html"
   },
   {
-    "revision": "c7265c767053543ff63f",
+    "revision": "fb1c028094bcf6485fbe",
     "url": "/Kupuj-towary/static/css/main.7491a057.chunk.css"
   },
   {
@@ -12,8 +12,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/Kupuj-towary/static/js/2.7dbba933.chunk.js"
   },
   {
-    "revision": "c7265c767053543ff63f",
-    "url": "/Kupuj-towary/static/js/main.3cd13e89.chunk.js"
+    "revision": "fb1c028094bcf6485fbe",
+    "url": "/Kupuj-towary/static/js/main.e1fc995e.chunk.js"
   },
   {
     "revision": "da2cc47dd60db5186928",
