@@ -3,8 +3,8 @@ import "./Info.css";
 
 const Info = () => {
   return (
-    <>
-      <div className="info">
+    <div className="info">
+      <div>
         <h3>Info</h3>
         <ul>
           <li>React App</li>
@@ -23,18 +23,25 @@ const Info = () => {
             There're text strings got by function from JSON file.
           </li>
           <li>Change styling</li>
-          <li>Fetch (still TODO)</li>
+          <li>Fetch - exchange ratios JSON from NBP</li>
+        </ul>
+        <h3>Libs used</h3>
+        <ul>
+          <li>gh-pages</li>
+          <li>Helmet</li>
+          <li>React Router</li>
         </ul>
         <h3>Faults</h3>
         <ul>
           <li>
-            It was built from bottom to the top, without design at the beginning
+            It was built from bottom to the top, without any specific design at
+            the beginning, mostly by just adding next features and functions.
           </li>
           <li>This is exercise draft at the process of learning React</li>
           <li>Code is dirty, hard to optimise, or even change</li>
         </ul>
       </div>
-      <div className="info">
+      <div>
         <h3>Black Friday application - what it does?</h3>
         <ul>
           <li>
@@ -68,7 +75,7 @@ const Info = () => {
           </li>
         </ul>
       </div>
-    </>
+    </div>
   );
 };
 

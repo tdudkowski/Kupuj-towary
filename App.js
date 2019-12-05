@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Helmet } from "react-helmet";
 import "./App.css";
 import langjson from "./lang.json";
 import "./modes.css";
@@ -18,6 +17,8 @@ let exchangeRates = [
   { key: 1, name: "euro", ratio: 0.23 },
   { key: 2, name: "dolar", ratio: 0.26 }
 ];
+
+let exchange = [1, 0.23, 0.25];
 
 let receiptArray = [];
 let limitActualValue = 0;
@@ -238,6 +239,24 @@ const Main = props => {
 };
 
 class App extends Component {
+  componentDidMount() {
+    fetch("http://api.nbp.pl/api/exchangerates/tables/a/")
+      .then(response => response.json())
+      .then(data => {
+        let usd = data[0].rates[1].mid;
+        let euro = data[0].rates[7].mid;
+        let exchange = [1, (1 / euro).toFixed(4), (1 / usd).toFixed(4)];
+        this.setState({
+          exchange: exchange
+        });
+        exchangeRates[1].ratio = this.state.exchange[1];
+        exchangeRates[2].ratio = this.state.exchange[2];
+      })
+      .catch(err => {
+        console.log("Error Reading data " + err);
+      });
+  }
+
   state = {
     limit: 100,
     limitActual: limitActualValue,
@@ -255,7 +274,8 @@ class App extends Component {
     checked: true,
     currency: "pln",
     txt: txt,
-    style: this.classNames
+    style: this.classNames,
+    exchange: [...exchange]
   };
 
   handleStyle = style => {
@@ -435,14 +455,13 @@ class App extends Component {
       operator === "plus" &&
       this.state.numberInCart[key] < goodsArray[key].numberAvailable
     ) {
-      // this.state.numberInCart[key] += 1;
       numberArray[key] += 1;
     } else if (operator === "minus" && this.state.numberInCart[key] > 0) {
       numberArray[key] -= 1;
     } else {
       return;
     }
-    console.log(costArray);
+
     costArray[key] = this.mathMachine(
       costArray[key],
       goodsArray[key].price,
@@ -463,6 +482,7 @@ class App extends Component {
 
   makeReceipt = () => {
     receiptArray = [];
+
     for (let i = 0; i < goodsArray.length; i++) {
       if (this.state.numberInCart[i] > 0) {
         receiptArray.push({
@@ -470,15 +490,18 @@ class App extends Component {
           name: goodsArray[i].name,
           number: this.state.numberInCart[i],
           cost: this.state.bill[i],
-          // costIC: this.state.bill[i]
           costIC: this.state.cost2Show[i]
         });
       }
-      this.setState({
-        orderValue: this.state.sumTotal,
-        orderValueIC: this.state.sumTotal2Show
-      });
     }
+    costArray.fill(0);
+    numberArray.fill(0);
+    this.setState({
+      orderValue: this.state.sumTotal,
+      orderValueIC: this.state.sumTotal2Show,
+      numberInCart: numberArray,
+      cost2Show: this.state.bill
+    });
   };
 
   handleBuy = () => {
@@ -486,8 +509,6 @@ class App extends Component {
       goodsArray.map(t => {
         return (goodsArray[t.key].numberAvailable -= numberArray[t.key]);
       });
-      costArray.fill(0);
-      numberArray.fill(0);
 
       let newLimit = this.mathMachine(
         this.state.limit,
@@ -502,9 +523,8 @@ class App extends Component {
         limitActual2Show: parseFloat(
           (prevState.limitActual * ratio).toFixed(4)
         ),
-        order: true,
-        numberInCart: numberArray,
         bill: costArray,
+        order: true,
         sumTotal: 0,
         sumTotal2Show: 0
       }));
@@ -517,35 +537,6 @@ class App extends Component {
   render() {
     return (
       <div className={this.state.style}>
-        <Helmet>
-          <meta charset="UTF-8" />
-          <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1.0"
-          />
-          <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-          <meta
-            property="og:url"
-            content="https://tdudkowski.github.io/Kupuj-towary/"
-          />
-          <meta property="og:type" content="application" />
-          <meta
-            property="og:title"
-            content="Kupuj towary try your Black Friday experience"
-          />
-          <meta
-            property="og:description"
-            content="my first React app - data flow and structuring components"
-          />
-          <meta
-            property="og:image"
-            content="https://tdudkowski.github.io/Kupuj-towary/kupujtowary.jpg"
-          />
-          <meta name="twitter:card" content="app" />
-          <meta name="twitter:site" content="@tdudkowski" />
-          <meta name="twitter:creator" content="@tdudkowski" />
-          <title>Kupuj towary try your Black Friday experience w App.js</title>
-        </Helmet>
         <div className="container">
           {/* <Info /> */}
           <h1>Kupuj towary! Waren kaufen! Buy Goods! Acheter des biens !</h1>

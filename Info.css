@@ -6,3 +6,19 @@ section {
 section div.info {
   flex: 1;
 }
+
+.info {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+@media (min-width: 860px) {
+  .info {
+    flex-direction: row;
+    padding: 0.5rem;
+  }
+  .info div {
+    flex: 1;
+  }
+}
