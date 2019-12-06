@@ -2,58 +2,21 @@ import React, { Component } from "react";
 import "./Admin.css";
 
 const goodsArrayBackup = [
-  { key: 0, name: "towar PIERWSZY", price: 0.01, numberAvailable: 111 },
-  { key: 1, name: "good SECOND", price: 1, numberAvailable: 131 },
-  { key: 2, name: "DRITTEN Ware", price: 10, numberAvailable: 100 },
-  { key: 3, name: "QUATRIÈME marchandise", price: 9.09, numberAvailable: 90 }
+  { key: 0, name: "towar PIERWSZY", price: 0.01, numberAvailable: 110 },
+  { key: 1, name: "good SECOND", price: 1, numberAvailable: 110 },
+  { key: 2, name: "DRITTE Ware", price: 10, numberAvailable: 110 },
+  { key: 3, name: "QUATRIÈME marchandise", price: 9.09, numberAvailable: 110 }
 ];
 
 let goodsArray = [
-  { key: 0, name: "towar PIERWSZY", price: 0.01, numberAvailable: 111 },
-  { key: 1, name: "good SECOND", price: 1, numberAvailable: 131 },
-  { key: 2, name: "DRITTEN Ware", price: 10, numberAvailable: 100 },
-  { key: 3, name: "QUATRIÈME marchandise", price: 9.09, numberAvailable: 90 }
+  { key: 0, name: "towar PIERWSZY", price: 0.01, numberAvailable: 110 },
+  { key: 1, name: "good SECOND", price: 1, numberAvailable: 109 },
+  { key: 2, name: "DRITTE Ware", price: 10, numberAvailable: 108 },
+  { key: 3, name: "QUATRIÈME marchandise", price: 9.09, numberAvailable: 107 }
 ];
 
 let numberArray = new Array(goodsArray.length).fill(0);
 let costArray = new Array(goodsArray.length).fill(0);
-
-const addGood = e => {
-  e.preventDefault();
-
-  const nameAdded = document.getElementById("addName").value;
-  let priceAdded = document.getElementById("addPrice").value;
-  const numberAdded = document.getElementById("addNumber").value;
-
-  document.getElementById("addName").value = "";
-  document.getElementById("addPrice").value = "";
-  document.getElementById("addNumber").value = "";
-
-  if (nameAdded.length > 5 && priceAdded > 0 && numberAdded > 0) {
-    if (priceAdded.toString().indexOf(".") !== -1) {
-      let priceAddedBefore = Math.floor(priceAdded);
-      let priceAddedAfter = priceAdded
-        .toString()
-        .substr(priceAdded.toString().indexOf(".") + 1, 2);
-      priceAdded = parseInt(priceAddedBefore) + parseInt(priceAddedAfter) / 100;
-      if (priceAdded === 0) {
-        console.log("price cannot be zero");
-        return;
-      }
-    }
-    goodsArray.push({
-      key: goodsArray.length,
-      name: nameAdded,
-      price: priceAdded * 1,
-      numberAvailable: parseInt(numberAdded)
-    });
-    costArray.push(0);
-  } else {
-    console.log("data are not correct");
-  }
-
-  numberArray = new Array(goodsArray.length).fill(0);
-};
 
 const GoodRemoveModify = props => {
   return (
@@ -109,7 +72,11 @@ const AdminPage = props => {
           <label htmlFor="">
             Number in stock: <input type="number" name="" id="addNumber" />
           </label>
-          <input type="submit" value="ADD GOOD" onClick={e => addGood(e)} />
+          <input
+            type="submit"
+            value="ADD GOOD"
+            onClick={e => props.handleAddGood(e)}
+          />
         </form>
         <hr />
         <h4>Retrieve standard set of goods</h4>
@@ -136,6 +103,44 @@ class Admin extends Component {
     listOfGoodsBackup: goodsArrayBackup
   };
 
+  handleAddGood = e => {
+    e.preventDefault();
+
+    const nameAdded = document.getElementById("addName").value;
+    let priceAdded = document.getElementById("addPrice").value;
+    const numberAdded = document.getElementById("addNumber").value;
+
+    document.getElementById("addName").value = "";
+    document.getElementById("addPrice").value = "";
+    document.getElementById("addNumber").value = "";
+
+    if (nameAdded.length > 5 && priceAdded > 0 && numberAdded > 0) {
+      if (priceAdded.toString().indexOf(".") !== -1) {
+        let priceAddedBefore = Math.floor(priceAdded);
+        let priceAddedAfter = priceAdded
+          .toString()
+          .substr(priceAdded.toString().indexOf(".") + 1, 2);
+        priceAdded =
+          parseInt(priceAddedBefore) + parseInt(priceAddedAfter) / 100;
+        if (priceAdded === 0) {
+          console.log("price cannot be zero");
+          return;
+        }
+      }
+      goodsArray.push({
+        key: goodsArray.length,
+        name: nameAdded,
+        price: priceAdded * 1,
+        numberAvailable: parseInt(numberAdded)
+      });
+      costArray.push(0);
+    } else {
+      console.log("data are not correct");
+    }
+
+    numberArray = new Array(goodsArray.length).fill(0);
+  };
+
   handleRetrieve = () => {
     goodsArray = [...goodsArrayBackup];
     this.setState({
@@ -143,12 +148,21 @@ class Admin extends Component {
     });
   };
 
+  makeThatListAgain = () => {
+    for (let i = 0; i < goodsArray.length; i++) {
+      goodsArray[i].key = i;
+    }
+  };
+
   handleModify = key => {
     const index = goodsArray.findIndex(good => good.key === key);
     goodsArray.splice(index, 1);
+    costArray.splice(index, 1);
+    numberArray.splice(index, 1);
     this.setState({
       listOfGoods: goodsArray
     });
+    this.makeThatListAgain();
   };
 
   handlePassword = e => {
@@ -175,10 +189,10 @@ class Admin extends Component {
           </p>
           <form>
             <label htmlFor="">
-              Hasło: abc
+              Password: abc
               <input type="password" id="inputPassword" placeholder="abc" />
               <button onClick={e => this.handlePassword(e)} type="submit">
-                Wyślij
+                Send
               </button>
             </label>
           </form>
@@ -186,6 +200,7 @@ class Admin extends Component {
         {this.state.passwordOK && (
           <AdminPage
             listOfGoods={this.state.listOfGoods}
+            handleAddGood={this.handleAddGood}
             handleModify={this.handleModify}
             handleRetrieve={this.handleRetrieve}
           />

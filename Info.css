@@ -13,6 +13,13 @@ section div.info {
   padding: 1rem;
 }
 
+img.preview {
+  display: block;
+  margin: 30px auto;
+  padding: 1rem;
+  border: 1px solid #bbc;
+}
+
 @media (min-width: 860px) {
   .info {
     flex-direction: row;

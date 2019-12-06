@@ -7,9 +7,6 @@ import { goodsArray, numberArray, costArray } from "./Admin.js";
 import Pad from "./Pad";
 
 let prices2ShowArray = [];
-for (let i = 0; i < goodsArray.length; i++) {
-  prices2ShowArray.push(goodsArray[i].price);
-}
 let cost2ShowArray = new Array(goodsArray.length).fill(0);
 
 let exchangeRates = [
@@ -23,6 +20,9 @@ let exchange = [1, 0.23, 0.25];
 let receiptArray = [];
 let limitActualValue = 0;
 let ratio = 1;
+
+// let newKey;
+// let newI;
 
 let txt = new Array(26).fill("");
 
@@ -267,7 +267,7 @@ class App extends Component {
     prices2Show: prices2ShowArray,
     cost2Show: cost2ShowArray,
     sumTotal: 0,
-    dumTotal2Show: 0,
+    sumTotal2Show: 0,
     order: false,
     orderValue: 0,
     orderValueIC: 0,
@@ -467,15 +467,17 @@ class App extends Component {
       goodsArray[key].price,
       operator
     );
-
     this.setState({ numberInCart: numberArray, bill: costArray });
+
+    for (let i = 0; i < goodsArray.length; i++) {
+      prices2ShowArray.push(goodsArray[i].price);
+    }
 
     this.makeSumTotal();
     this.makeArray2Show();
     this.makeNewLimit();
     this.setState(prevState => ({
-      numberInCart: this.state.numberInCart,
-      bill: costArray,
+      prices2Show: prices2ShowArray,
       limitActual2Show: parseFloat((prevState.limitActual * ratio).toFixed(4))
     }));
   };

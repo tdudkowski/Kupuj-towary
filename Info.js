@@ -1,6 +1,17 @@
 import React from "react";
 import "./Info.css";
 
+const Imgsrc = () => {
+  return (
+    <img
+      src={require("./kupujtowary.jpg")}
+      width="420"
+      alt="preview"
+      className="preview"
+    />
+  );
+};
+
 const Info = () => {
   return (
     <div className="info">
@@ -30,6 +41,18 @@ const Info = () => {
           <li>gh-pages</li>
           <li>Helmet</li>
           <li>React Router</li>
+        </ul>
+        <h3>Errors known</h3>
+        <ul>
+          <li>
+            Reload at eny other point than / collapsed page into 404, no
+            index.html here.
+          </li>
+          <li>
+            No preview in social media (Facebook or Twitter), seems related to
+            CRA inability to serve og meta tags in a way readable for fb and tt
+            crawlers.
+          </li>
         </ul>
         <h3>Faults</h3>
         <ul>
@@ -74,6 +97,7 @@ const Info = () => {
             till be useful in learning this framework.
           </li>
         </ul>
+        <Imgsrc />
       </div>
     </div>
   );

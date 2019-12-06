@@ -20,20 +20,27 @@ For now main features are:
 - There're four languages available for user, text strips taken by function from JSON, so it's easy to modify text, or add a new language.
 - User can change theme: light, dark, and high contrast are available.
 - Additionally there is an Admin Page with pseudologin: admin can delete any good, add (giving three values: name, price and number in stock), or restore all goods in original form. Any change done by admin is applied to user page. Reload deletes all changes.
+- Admin's list is updated after any change (modify or even purchase), this is actual data.
 
 ## TODO
 
 So, the stages to do are:
 
 - refine pseudologin at admin page
-- update admin's list at any change
-- make an engine to change of existing goods for admin mode (keep state of login in cookie?)
+- make an engine to change of existing goods for admin mode (maybe keep state of login in a cookie?)
 - comments in code
 - modules (to some extent this is done)
 - remove funny math errors (stopped finding them some time ago)
 
 ## Errors found
 
-Known errors:
+Known errors - only two, but both are worrying and hard to solve:
 
-- after adding a new item, list on admin page is not updated, this is not a feature.
+- reload at eny other point than / collapsed page into 404, no index.html here.
+- no preview in social media (Facebook or Twitter), seems related to CRA inability to serve og meta tags in a way readable for fb and tt crawlers. If so, this is ridiculous.
+
+- [How to add dynamic meta data using React Helmet #1261](https://github.com/facebook/create-react-app/issues/1261)
+- [Unable to share react web page on facebook after implement react-helmet #442](https://github.com/nfl/react-helmet/issues/442)
+- [facebook/create-react-app - Adding <meta> Tags](https://github.com/facebook/create-react-app/blob/9d9d31eccc1912670d841747b207ca56deb8cbdc/template/README.md#adding-meta-tags)
+- [How do I add route-specific <meta> tags to an app generated with Create React App?](https://twitter.com/dan_abramov/status/770966308162863104)
+- [How to implement server-side rendering in your React app in three simple steps](https://www.freecodecamp.org/news/server-side-rendering-your-react-app-in-three-simple-steps-7a82b95db82e/)

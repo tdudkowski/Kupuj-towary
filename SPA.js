@@ -38,14 +38,18 @@ class Spa extends Component {
           />
           <meta
             property="og:description"
-            content="my first React app - data flow and structuring components"
+            content="my first React App - data flow and structuring components"
           />
           <meta name="twitter:card" content="app" />
           <meta name="twitter:site" content="@tdudkowski" />
           <meta name="twitter:creator" content="@tdudkowski" />
           <meta
             property="og:image"
-            content="https://tdudkowski.github.io/Kupuj-towary/kupujtowary.jpg"
+            content="https://raw.githubusercontent.com/tdudkowski/Kupuj-towary/master/kupujtowary.jpg"
+          />
+          <meta
+            property="og:image:secure_url"
+            content="https://raw.githubusercontent.com/tdudkowski/Kupuj-towary/master/kupujtowary.jpg"
           />
         </Helmet>
 
