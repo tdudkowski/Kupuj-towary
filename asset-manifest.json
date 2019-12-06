@@ -1,21 +1,22 @@
 {
   "files": {
-    "main.css": "/Kupuj-towary/static/css/main.7491a057.chunk.css",
-    "main.js": "/Kupuj-towary/static/js/main.6d684303.chunk.js",
-    "main.js.map": "/Kupuj-towary/static/js/main.6d684303.chunk.js.map",
+    "main.css": "/Kupuj-towary/static/css/main.0fbd9718.chunk.css",
+    "main.js": "/Kupuj-towary/static/js/main.ce15305d.chunk.js",
+    "main.js.map": "/Kupuj-towary/static/js/main.ce15305d.chunk.js.map",
     "runtime-main.js": "/Kupuj-towary/static/js/runtime-main.d365b3cf.js",
     "runtime-main.js.map": "/Kupuj-towary/static/js/runtime-main.d365b3cf.js.map",
-    "static/js/2.7dbba933.chunk.js": "/Kupuj-towary/static/js/2.7dbba933.chunk.js",
-    "static/js/2.7dbba933.chunk.js.map": "/Kupuj-towary/static/js/2.7dbba933.chunk.js.map",
+    "static/js/2.b4ff0adb.chunk.js": "/Kupuj-towary/static/js/2.b4ff0adb.chunk.js",
+    "static/js/2.b4ff0adb.chunk.js.map": "/Kupuj-towary/static/js/2.b4ff0adb.chunk.js.map",
     "index.html": "/Kupuj-towary/index.html",
-    "precache-manifest.555ff3cdcd5d9273ca5b4497ff145e4f.js": "/Kupuj-towary/precache-manifest.555ff3cdcd5d9273ca5b4497ff145e4f.js",
+    "precache-manifest.bd4e393f8ee3fbf5e130659d8f914cd9.js": "/Kupuj-towary/precache-manifest.bd4e393f8ee3fbf5e130659d8f914cd9.js",
     "service-worker.js": "/Kupuj-towary/service-worker.js",
-    "static/css/main.7491a057.chunk.css.map": "/Kupuj-towary/static/css/main.7491a057.chunk.css.map"
+    "static/css/main.0fbd9718.chunk.css.map": "/Kupuj-towary/static/css/main.0fbd9718.chunk.css.map",
+    "static/media/kupujtowary.jpg": "/Kupuj-towary/static/media/kupujtowary.1a6ca638.jpg"
   },
   "entrypoints": [
     "static/js/runtime-main.d365b3cf.js",
-    "static/js/2.7dbba933.chunk.js",
-    "static/css/main.7491a057.chunk.css",
-    "static/js/main.6d684303.chunk.js"
+    "static/js/2.b4ff0adb.chunk.js",
+    "static/css/main.0fbd9718.chunk.css",
+    "static/js/main.ce15305d.chunk.js"
   ]
 }
